@@ -19,7 +19,6 @@ function NavBar() {
       <div className="navbarIcons">
         <IoIosMail size={32} />
         <br />
-        <IoIosSettings size={28} />
       </div>
     </nav>
   );

@@ -12,12 +12,13 @@ function HomePage() {
     <div>
       <NavBar />
       <br />
+      <div style={{ marginRight: "100px", marginLeft: "100px" }}>
+        <LessonSelection />
 
-      <LessonSelection />
-
-      <div className="content">
-        <div className="homepage-style-main">
-          <Online />
+        <div className="content">
+          <div className="homepage-style-main">
+            <Online />
+          </div>
         </div>
       </div>
     </div>

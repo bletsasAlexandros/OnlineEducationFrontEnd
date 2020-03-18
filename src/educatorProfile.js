@@ -3,6 +3,12 @@ import "./profiles.css";
 import NavBar from "./homepagecomp/navbarProfile";
 
 class educatorProfile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      description: "Submit your review"
+    };
+  }
   render() {
     return (
       <div>
@@ -34,10 +40,34 @@ class educatorProfile extends React.Component {
         </div>
         <div className="sectionStyle">
           <div className="row">
-            <textarea className="col-md">Notes</textarea>
+            <div className="col-md sector">Notes</div>
           </div>
           <div className="row">
-            <textarea className="col-md">Reviews</textarea>
+            <div className="col-md sector">Reviews</div>
+          </div>
+          <div className="row">
+            <div className="col-md sector">
+              <form>
+                <textarea
+                  style={{ margin: "10px", width: "80%", outline: "none" }}
+                  placeholder={this.state.description}
+                />
+                <button
+                  type="submit"
+                  name="Submit"
+                  value="Submit"
+                  style={{
+                    margin: "10px",
+                    width: "130px",
+                    height: "40px",
+                    borderRadius: "4px",
+                    float: "right"
+                  }}
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
