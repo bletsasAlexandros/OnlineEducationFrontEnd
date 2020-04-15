@@ -11,34 +11,40 @@ class Login extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
   }
 
-  onChangeEmail = e => {
+  onChangeEmail = (e) => {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   };
 
-  onChangePassword = e => {
+  onChangePassword = (e) => {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
     });
   };
 
-  onSubmit = e => {
+  onSubmit = (e, props) => {
     e.preventDefault();
     const user = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
 
-    axios.post("http://localhost:5000/users/signin", user).then(res => {
-      console.log(res.data);
-
-      window.location.href = "/OnliEdu/homepage";
-    });
+    axios
+      .post("http://localhost:5000/users/login", user)
+      .then((res) => {
+        this.props.history.push({
+          pathname: "/OnliEdu/homepage",
+          state: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -81,13 +87,8 @@ class Login extends React.Component {
             <div className="text-center">
               {/*If the person wnat to sign up he will be redirected to
               sign up pahe*/}
-              <Link to="/OnliEdu/signup">
-                <a href="/sign-up">Sign Up</a>
-              </Link>
-              <Link to="OnliEdu/underConstruction">
-                {" "}
-                | <a>Forgot Password</a>
-              </Link>
+              <Link to="/OnliEdu/signup">Sign up</Link>
+              <Link to="OnliEdu/underConstruction"> | Forgot Password</Link>
             </div>
           </div>
         </Form>

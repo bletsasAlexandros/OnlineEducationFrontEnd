@@ -1,14 +1,43 @@
 import React from "react";
-import { Dropdown, DropdownButton, DropwonItem } from "react-bootstrap";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import "./homepage.css";
 
 class LessonsSelection extends React.Component {
   constructor() {
     super();
     this.state = {
-      lesson: ["Math", "Physics", "English", "Chemistry", "Literature"]
+      lesson: [
+        "Math",
+        "Physics",
+        "English",
+        "Chemistry",
+        "Literature",
+        "Management",
+      ],
+      options: null,
     };
   }
+
+  componentWillMount() {
+    this.howmany();
+  }
+
+  handleChange = (e) => {
+    this.props.getSelectedValue(e.target.innerHTML);
+  };
+
+  howmany = () => {
+    var options = [];
+    var i = 0;
+    for (i; i <= this.state.lesson.length; i++) {
+      options.push(
+        <Dropdown.Item value={this.state.lesson[i]}>
+          {this.state.lesson[i]}
+        </Dropdown.Item>
+      );
+    }
+    this.setState({ options: options });
+  };
 
   render() {
     return (
@@ -16,12 +45,10 @@ class LessonsSelection extends React.Component {
         id="dropdown-basic-button"
         title="Select lesson"
         className="dropdown-style"
+        value={this.state.selectValue}
+        onClick={this.handleChange}
       >
-        <Dropdown.Item href="#/action-1">{this.state.lesson[0]}</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">{this.state.lesson[1]}</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">{this.state.lesson[2]}</Dropdown.Item>
-        <Dropdown.Item href="#/action-4">{this.state.lesson[3]}</Dropdown.Item>
-        <Dropdown.Item href="#/action-5">{this.state.lesson[4]}</Dropdown.Item>
+        {this.state.options}
       </DropdownButton>
     );
   }

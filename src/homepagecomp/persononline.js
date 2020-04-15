@@ -2,49 +2,94 @@ import React from "react";
 import "./homepage.css";
 import logo from "./image.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import StarRatingComponent from "react-star-rating-component";
 
 class PersonOnline extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      name: "Alex",
-      surname: "Bletsas",
-      rating: 4
+      name: "",
+      surname: "",
+      rating: 4,
+      email: "",
+      aboutSelf: "",
+      id: "",
+      modalIsOpen: false,
     };
   }
 
-  render() {
+  componentWillMount(props) {
+    axios
+      .get("http://localhost:5000/users/starratings/id", {
+        params: { id: this.props.id },
+      })
+      .then((res) => {
+        this.setState({ rating: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState({
+      id: this.props.id,
+      name: this.props.firstName,
+      surname: this.props.lastName,
+      email: this.props.email,
+      aboutSelf: this.props.aboutSelf,
+      subject: this.props.subject,
+    });
+  }
+
+  render(props) {
     return (
-      <div class="container container-style">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="media style">
-              <a class="thumbnail pull-left" href="#">
-                <img class="media-object img-style" src={logo} />
+      <div className="container container-style">
+        <div className="row">
+          <div className="col-md-4">
+            <div className="media style">
+              <a className="thumbnail pull-left">
+                <img className="media-object img-style" src={logo} />
               </a>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-5">
             <div className="info">
-              <h4 class="media-heading">
-                {this.state.name} {this.state.surname}
-              </h4>{" "}
-              <h6>{this.state.rating}</h6>
+              <h5 className="media-heading">
+                {this.state.name} {this.state.surname}{" "}
+              </h5>{" "}
+              <h6>({this.state.subject})</h6>
+              <StarRatingComponent
+                name="star rating"
+                value={this.state.rating}
+              />
             </div>
           </div>
-          <div class="col-md-4 style1">
+          <div className="col-md-3 style1">
             <ul className="info">
+              <li
+                className="buttonfile1 theInfoDisplay"
+                onClick={() =>
+                  this.props.chatHandler(this.state.name, this.state.id)
+                }
+              >
+                Live Chat
+              </li>
               <li>
-                <Link to="/OnliEdu/underConstruction">
-                  <a href="/OnliEdu/underConstruction">Live Chat</a>
+                <Link
+                  to="/OnliEdu/underConstruction"
+                  className="theInfoDisplay"
+                >
+                  Video Call
                 </Link>
               </li>
               <li>
-                <Link to="/OnliEdu/underConstruction">Video Call</Link>
-              </li>
-              <li>
-                <Link to="/OnliEdu/educatorProfile">
-                  <a href="/OnliEdu/educatorProfile">Profile</a>
+                <Link
+                  to={{
+                    pathname: "/OnliEdu/educatorProfile",
+                    params: this.state,
+                  }}
+                  className="theInfoDisplay"
+                >
+                  Profile
                 </Link>
               </li>
             </ul>

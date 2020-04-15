@@ -3,13 +3,33 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 10vh;
+  height: 8vh;
   background-color: #dac292;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 }
 
 /*h3 class a used in navbar*/
 h3.a {
   float: right;
+}
+
+.logo {
+  margin-left: 10%;
+}
+
+.logoutButtonPosition {
+  position: absolute;
+  right: 20%;
+}
+
+.logoutButtonSytle {
+  border: none;
+  background-color: inherit;
+  font-weight: bold;
+}
+
+.logoutButtonSytle:hover {
+  text-decoration: underline;
 }
 
 /*drop down button used in lessonSelecti */
@@ -20,6 +40,7 @@ h3.a {
   width: 15%;
   margin: 10px;
   display: inline;
+  box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 /*used in persononline */
@@ -30,12 +51,24 @@ h3.a {
   border-color: #7a653b;
   background-color: #dac292;
   padding: 0 !important;
-  border-radius: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 }
 
 /*used in persononline */
 .container-style .info {
-  margin: 15px;
+  margin: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.theInfoDisplay {
+  color: blue;
+  text-decoration: underline;
+}
+
+.theInfoDisplay:hover {
+  color: rgb(102, 163, 255);
 }
 
 /*used in persononline */
@@ -48,7 +81,14 @@ h3.a {
 
 /*used in persononline */
 .container-style:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+}
+
+.check-who {
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom: 10px;
+  font-style: italic;
 }
 
 /*used in persononline */
@@ -93,14 +133,12 @@ h1.a {
   max-width: 100vh;
   min-width: 25vh;
   min-height: 80vh;
-
   border-radius: 25px;
 }
 
 /*used in online js to display all users online */
 .online-container {
   margin-left: 40px;
-  margin-right: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -108,7 +146,7 @@ h1.a {
 /*used in homepage for scroll down*/
 .content {
   max-height: 75vh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /*Navbar icons to left */
@@ -116,4 +154,18 @@ h1.a {
   margin: 2px;
   float: right;
   display: inline;
+}
+
+.buttonfile1:hover {
+  cursor: pointer;
+}
+
+.footer {
+  position: absolute;
+  text-align: center;
+  width: 99.9%;
+  background-color: rgb(26, 0, 13);
+  color: white;
+  font-weight: bold;
+  bottom: 0px;
 }

@@ -1,3 +1,12 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 8vh;
+  background-color: #dac292;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+}
+
 .container {
   padding: 5%;
 }
@@ -30,4 +39,29 @@
   border-left-style: solid;
   border-top-style: solid;
   min-height: 15vh;
+  font-weight: bold;
+}
+
+.textarea1 {
+  border: none;
+  resize: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+.buttonFile {
+  border: none;
+  background-color: none;
+  font-weight: normal;
+  color: blue;
+}
+
+.buttonFile:hover {
+  cursor: pointer;
+}
+
+.moadl {
+  max-width: 100px;
+  max-height: 100px;
+  background: red;
 }

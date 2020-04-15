@@ -1,17 +1,87 @@
 import React from "react";
 import "./profiles.css";
 import NavBar from "./homepagecomp/navbarProfile";
+import axios from "axios";
+import StarRatingComponent from "react-star-rating-component";
+import Reviews from "./homepagecomp/reviews";
+import Notes from "./homepagecomp/notes";
 
 class educatorProfile extends React.Component {
   constructor() {
     super();
     this.state = {
-      description: "Submit your review"
+      description: "Submit your review",
+      token: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      aboutSelf: "",
+      review: "",
+      stars: 1,
+      loaded: false
     };
   }
-  render() {
+  async componentDidMount(props) {
+    await this.start();
+    this.setState({ loaded: true });
+  }
+
+  start = props => {
+    if (this.props.location.params) {
+      localStorage.setItem(
+        "currentProfile",
+        JSON.stringify(this.props.location.params)
+      );
+    }
+    const user = JSON.parse(localStorage.getItem("currentProfile"));
+    this.setState({
+      token: user.id,
+      firstName: user.name,
+      lastName: user.surname,
+      email: user.email,
+      aboutSelf: user.aboutSelf
+    });
+  };
+
+  handleChangeReview = event => {
+    this.setState({ review: event.target.value });
+  };
+
+  handleSubmit = event => {
+    console.log(this.state);
+    localStorage.removeItem("review");
+    let rev = { id: this.state.token, review: this.state.review };
+    localStorage.setItem("review", JSON.stringify(rev));
+    this.save();
+    event.preventDefault();
+    this.props.history.push({
+      pathname: "/OnliEdu/educatorProfile"
+    });
+  };
+
+  onStarClick = (nextValue, prevValue, name) => {
+    this.setState({ stars: nextValue });
+  };
+
+  save(props) {
+    axios
+      .post("http://localhost:5000/users/postreview/review", null, {
+        params: {
+          id: this.state.token,
+          review: this.state.review,
+          stars: this.state.stars
+        }
+      })
+      .then(() => {
+        this.setState({ profReview: "", stars: "" });
+        localStorage.removeItem("review");
+      })
+      .catch(err => console.log(err));
+  }
+
+  content() {
     return (
-      <div>
+      <div style={{ marginRight: "5%", marginLeft: "5%" }}>
         <NavBar />
         <div className="container">
           <div className="row">
@@ -19,59 +89,73 @@ class educatorProfile extends React.Component {
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
                 alt=""
-                class="img-rounded"
+                className="img-rounded"
               />
             </div>
             <div className="col-md-6 details">
               <blockquote>
-                <h5>First and Last Name</h5>
-                <small>
-                  <cite title="Source Title">
-                    Home <i className="icon-map-marker"></i>
-                  </cite>
-                </small>
+                <h5>
+                  {this.state.firstName} {this.state.lastName}
+                </h5>
+                <small></small>
               </blockquote>
               <p>
-                email <br />
-                birthday
+                {this.state.email} <br />
               </p>
             </div>
           </div>
         </div>
         <div className="sectionStyle">
-          <div className="row">
-            <div className="col-md sector">Notes</div>
+          <div className="col-md sector" style={{ fontWeight: "bold" }}>
+            About Me:
+            <div style={{ fontWeight: "normal" }}>{this.state.aboutSelf}</div>
           </div>
           <div className="row">
-            <div className="col-md sector">Reviews</div>
+            <div className="col-md sector" style={{ fontWeight: "bold" }}>
+              Notes:
+              <br />
+              <Notes
+                id={JSON.parse(localStorage.getItem("currentProfile")).id}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md sector" style={{ fontWeight: "bold" }}>
+              Reviews
+              <Reviews
+                id={JSON.parse(localStorage.getItem("currentProfile")).id}
+              />
+              <br />
+              <div></div>
+            </div>
           </div>
           <div className="row">
             <div className="col-md sector">
-              <form>
+              <form onSubmit={this.handleSubmit}>
                 <textarea
                   style={{ margin: "10px", width: "80%", outline: "none" }}
-                  placeholder={this.state.description}
+                  value={this.state.review}
+                  onChange={this.handleChangeReview}
                 />
-                <button
+                <StarRatingComponent
+                  name="star rating"
+                  onStarClick={this.onStarClick}
+                />
+                <input
                   type="submit"
-                  name="Submit"
-                  value="Submit"
-                  style={{
-                    margin: "10px",
-                    width: "130px",
-                    height: "40px",
-                    borderRadius: "4px",
-                    float: "right"
-                  }}
-                >
-                  Submit
-                </button>
+                  value="Submit Review"
+                  style={{ backgroundColor: "lightblue" }}
+                />
               </form>
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  render() {
+    return <div>{this.state.loaded ? this.content() : null}</div>;
   }
 }
 

@@ -69,7 +69,7 @@ class SignUp extends React.Component {
 
   onSubmit = e => {
     const { password, confirmPassword } = this.state;
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Passwords don't match");
     } else {
       e.preventDefault();
