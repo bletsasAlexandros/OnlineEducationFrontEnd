@@ -3,6 +3,7 @@ import { GoMail } from "react-icons/go";
 import "./homepage.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import logo from "./logo.png";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -27,12 +28,22 @@ class NavBar extends React.Component {
   render() {
     return (
       <nav>
-        <h2 className="logo">OnliEdu</h2>
-        <span className="logoutButtonPosition">
+        <div
+          style={{
+            height: "50px",
+            width: "200px",
+            position: "relative",
+            marginLeft: "15%",
+          }}
+        >
+          <img src={logo} />
+        </div>
+        <div className="logoutButtonPosition">
           <button onClick={this.props.logout} className="logoutButtonSytle">
             Logout
           </button>
-        </span>
+        </div>
+
         <Link
           to={{
             pathname: "/OnliEdu/studentProfile",

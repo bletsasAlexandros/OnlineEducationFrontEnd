@@ -14,7 +14,14 @@ h3.a {
 }
 
 .logo {
-  margin-left: 10%;
+  position: absolute;
+  right: 19%;
+  top: 19px;
+  font-weight: bold;
+  text-align: center;
+}
+.logo:hover {
+  text-decoration: underline;
 }
 
 .logoutButtonPosition {

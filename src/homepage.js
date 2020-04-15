@@ -24,18 +24,17 @@ class HomePage extends React.Component {
       idForChat: "",
       userRoom: null,
       selectedValue: "Nothing",
+      name: null,
     };
   }
 
   componentDidMount() {
+    console.log(this.state.name);
     socket.on(this.state.name, (name) => {
       var userRoom = name + this.state.name;
       console.log(userRoom);
       this.setState({ chat: true, nameForChat: name, userRoom: userRoom });
     });
-    var user = JSON.parse(localStorage.getItem("currentUser"));
-    var name = user.firstName;
-    this.setState({ name: name });
   }
 
   componentWillMount() {
@@ -61,6 +60,12 @@ class HomePage extends React.Component {
         this.setState({ loading: false });
       }
     );
+    if (this.props.location.state) {
+      this.setState({
+        name: this.props.location.state.name,
+        token: this.props.location.state.token,
+      });
+    }
   }
 
   getNewProf = () => {

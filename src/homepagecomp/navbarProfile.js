@@ -2,19 +2,20 @@ import React from "react";
 import "./homepage.css";
 import { IoIosHome, IoIosMail } from "react-icons/io";
 import { Link } from "react-router-dom";
+import logo from "./logo.png";
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: ""
+      token: "",
     };
   }
 
   componentDidMount() {
     const userIdC = JSON.parse(localStorage.getItem("profileUser"));
     this.setState({
-      token: userIdC._id
+      token: userIdC._id,
     });
   }
 
@@ -24,20 +25,20 @@ class NavBar extends React.Component {
         <div style={{ display: "inline" }}>
           <Link
             to={{
-              pathname: "/OnliEdu/homepage"
+              pathname: "/OnliEdu/homepage",
             }}
           >
-            <IoIosHome
-              size={28}
-              style={{ verticalAlign: "inherit", color: "black" }}
-            />
+            <div
+              style={{
+                height: "50px",
+                width: "200px",
+                position: "relative",
+                marginLeft: "15%",
+              }}
+            >
+              <img src={logo} />
+            </div>
           </Link>
-          <h2 style={{ display: "inline", top: "10px" }}>OnliEdu</h2>
-        </div>
-
-        <div className="navbarIcons">
-          <IoIosMail size={32} />
-          <br />
         </div>
       </nav>
     );
