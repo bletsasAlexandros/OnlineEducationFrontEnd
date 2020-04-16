@@ -29,7 +29,6 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.name);
     socket.on(this.state.name, (name) => {
       var userRoom = name + this.state.name;
       console.log(userRoom);
@@ -65,6 +64,10 @@ class HomePage extends React.Component {
         name: this.props.location.state.name,
         token: this.props.location.state.token,
       });
+    } else {
+      var user = JSON.parse(localStorage.getItem("profileUser"));
+      var name = user.firstName;
+      this.setState({ name: name });
     }
   }
 

@@ -54,6 +54,8 @@ class reviews extends React.Component {
               paddingTop: "15px",
               paddingBottom: "15px",
               fontWeight: "normal",
+              margin: "5px",
+              padding: "0",
             }}
           >
             {rev[i].review}{" "}

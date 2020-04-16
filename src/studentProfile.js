@@ -4,6 +4,7 @@ import NavBar from "./homepagecomp/navbarProfile";
 import { IoIosSettings } from "react-icons/io";
 import axios from "axios";
 import Reviews from "./homepagecomp/reviews";
+import Footer from "./homepagecomp/footer";
 
 class studentProfile extends React.Component {
   constructor(props) {
@@ -98,8 +99,8 @@ class studentProfile extends React.Component {
           <div className="row">
             <div className="col-md sector">
               Notes:
-              <div>
-                <ul>{notes}</ul>
+              <div style={{ paddingTop: "10px" }}>
+                <ul className="ul-file-position">{notes}</ul>
               </div>
             </div>
           </div>
@@ -123,11 +124,11 @@ class studentProfile extends React.Component {
         <NavBar profile={this.state.token} className="navbar" />
         <div className="container">
           <div className="row">
-            <div className="col-md-6 img">
+            <div className="col-md-6 img ">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
                 alt=""
-                className="img-rounded"
+                className="img-rounded img-style"
               />
             </div>
             <div className="col-md-6 details">
@@ -148,15 +149,23 @@ class studentProfile extends React.Component {
               </p>
             </div>
           </div>
-          <div rows="4" cols="50" className="textarea col sm={8} sector">
-            About Me:
-            <br />
-            <div className="container" style={{ fontWeight: "normal" }}>
-              {this.state.aboutSelf}
+          <div className="sectionStyle">
+            <div
+              rows="4"
+              cols="50"
+              className="textarea col sm={6} sector"
+              style={{ marginLeft: "5px" }}
+            >
+              About Me:
+              <br />
+              <div className="container" style={{ fontWeight: "normal" }}>
+                {this.state.aboutSelf}
+              </div>
             </div>
           </div>
           {this.Professor()}
         </div>
+        <Footer />
       </div>
     );
   }

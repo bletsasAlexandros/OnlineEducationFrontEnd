@@ -168,7 +168,7 @@ h1.a {
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   text-align: center;
   width: 99.9%;
   background-color: rgb(26, 0, 13);

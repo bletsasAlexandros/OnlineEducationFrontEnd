@@ -5,6 +5,7 @@ import axios from "axios";
 import StarRatingComponent from "react-star-rating-component";
 import Reviews from "./homepagecomp/reviews";
 import Notes from "./homepagecomp/notes";
+import Footer from "./homepagecomp/footer";
 
 class educatorProfile extends React.Component {
   constructor() {
@@ -18,7 +19,7 @@ class educatorProfile extends React.Component {
       aboutSelf: "",
       review: "",
       stars: 1,
-      loaded: false
+      loaded: false,
     };
   }
   async componentDidMount(props) {
@@ -26,7 +27,7 @@ class educatorProfile extends React.Component {
     this.setState({ loaded: true });
   }
 
-  start = props => {
+  start = (props) => {
     if (this.props.location.params) {
       localStorage.setItem(
         "currentProfile",
@@ -39,15 +40,15 @@ class educatorProfile extends React.Component {
       firstName: user.name,
       lastName: user.surname,
       email: user.email,
-      aboutSelf: user.aboutSelf
+      aboutSelf: user.aboutSelf,
     });
   };
 
-  handleChangeReview = event => {
+  handleChangeReview = (event) => {
     this.setState({ review: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     console.log(this.state);
     localStorage.removeItem("review");
     let rev = { id: this.state.token, review: this.state.review };
@@ -55,7 +56,7 @@ class educatorProfile extends React.Component {
     this.save();
     event.preventDefault();
     this.props.history.push({
-      pathname: "/OnliEdu/educatorProfile"
+      pathname: "/OnliEdu/educatorProfile",
     });
   };
 
@@ -69,27 +70,27 @@ class educatorProfile extends React.Component {
         params: {
           id: this.state.token,
           review: this.state.review,
-          stars: this.state.stars
-        }
+          stars: this.state.stars,
+        },
       })
       .then(() => {
         this.setState({ profReview: "", stars: "" });
         localStorage.removeItem("review");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   content() {
     return (
-      <div style={{ marginRight: "5%", marginLeft: "5%" }}>
-        <NavBar />
+      <div>
+        <NavBar className="navbar" />
         <div className="container">
           <div className="row">
             <div className="col-md-6 img">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
                 alt=""
-                className="img-rounded"
+                className="img-rounded img-style"
               />
             </div>
             <div className="col-md-6 details">
@@ -106,7 +107,10 @@ class educatorProfile extends React.Component {
           </div>
         </div>
         <div className="sectionStyle">
-          <div className="col-md sector" style={{ fontWeight: "bold" }}>
+          <div
+            className="col-md sector"
+            style={{ fontWeight: "bold", marginLeft: "5px" }}
+          >
             About Me:
             <div style={{ fontWeight: "normal" }}>{this.state.aboutSelf}</div>
           </div>
@@ -150,6 +154,7 @@ class educatorProfile extends React.Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
