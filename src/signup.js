@@ -178,7 +178,6 @@ class SignUp extends React.Component {
             >
               Sign up
             </Button>
-            <Link to="/OnliEdu/homepage">Continue to page</Link>
             <br />
           </div>
         </Form>

@@ -3,6 +3,7 @@ import NavBar from "./homepagecomp/navbarProfile";
 import axios from "axios";
 import "./profiles.css";
 import Footer from "./homepagecomp/footer";
+import imag from "./default-image.png";
 
 class SetingsOfProfile extends React.Component {
   constructor(props) {
@@ -16,19 +17,48 @@ class SetingsOfProfile extends React.Component {
       professor: false,
       selectedFile: null,
       done: false,
+      selectedImage: imag,
+      defImage: null,
     };
   }
 
-  async componentDidMount() {
+  componentWillMount() {
     const user = JSON.parse(localStorage.getItem("profileUser"));
-    await this.setState({
-      token: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      aboutSelf: user.aboutSelf,
-      professor: user.professor,
-    });
+    const id = JSON.parse(localStorage.getItem("currentUser"));
+    this.setState(
+      {
+        token: id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        aboutSelf: user.aboutSelf,
+        professor: user.professor,
+      },
+      () => {
+        this.loadImage();
+      }
+    );
+  }
+
+  loadImage() {
+    axios
+      .get("http://localhost:5000/displayPhoto/id", {
+        params: {
+          id: this.state.token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.length > 0) {
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.setState({ selectedImage: e.target.result }, () => {
+              console.log(this.state.selectedImage);
+            });
+          };
+          // reader.readAsDataURL(res.data);
+        }
+      });
   }
 
   handleChange = (event) => {
@@ -51,6 +81,20 @@ class SetingsOfProfile extends React.Component {
     localStorage.setItem("profileUser", JSON.stringify(this.state));
     this.save();
     event.preventDefault();
+  };
+
+  onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({ defImage: event.target.files[0] }, () => {
+        console.log(this.state.defImage);
+      });
+      console.log(event.target.files[0]);
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.setState({ selectedImage: e.target.result });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   };
 
   onChangeHandler = (event) => {
@@ -89,6 +133,16 @@ class SetingsOfProfile extends React.Component {
         // then print response status
         console.log(res.data);
       });
+    const data1 = new FormData();
+    data1.append("file", this.state.defImage);
+    await axios
+      .post("http://localhost:5000/uploadPhoto", data1, {
+        params: { id: JSON.parse(localStorage.getItem("currentUser")) },
+      })
+      .then((res) => {
+        // then print response status
+        console.log(res.data);
+      });
     this.props.history.push({
       pathname: "/OnliEdu/studentProfile",
     });
@@ -120,9 +174,18 @@ class SetingsOfProfile extends React.Component {
             <div className="row">
               <div className="col-md-6 img">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
+                  src={this.state.selectedImage}
                   alt=""
                   className="img-rounded img-style"
+                />
+                <input
+                  type="file"
+                  onChange={this.onImageChange}
+                  style={{
+                    float: "right",
+                    textAlign: "rigth",
+                    paddingTop: "5px",
+                  }}
                 />
               </div>
               <div className="col-md-6 details">
