@@ -55,9 +55,7 @@ class educatorProfile extends React.Component {
     localStorage.setItem("review", JSON.stringify(rev));
     this.save();
     event.preventDefault();
-    this.props.history.push({
-      pathname: "/OnliEdu/educatorProfile",
-    });
+    window.location.reload(false);
   };
 
   onStarClick = (nextValue, prevValue, name) => {

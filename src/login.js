@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Input } from "reactstrap";
 import "./login.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import logo from "./login-logo.png";
 
 /*Simple login form.*/
 
@@ -51,7 +52,7 @@ class Login extends React.Component {
     return (
       <div className="background" onSubmit={this.onSubmit}>
         <Form className="login-form">
-          <h1 className="font-weight-bold text-center">OnliEdu</h1>
+          <img src={logo} />
           <h6 className="text-center font-weight-light ">
             "learning without limits"
           </h6>
