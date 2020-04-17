@@ -55,7 +55,6 @@ class educatorProfile extends React.Component {
   };
 
   handleSubmit = (event) => {
-    console.log(this.state);
     localStorage.removeItem("review");
     let rev = { id: this.state.token, review: this.state.review };
     localStorage.setItem("review", JSON.stringify(rev));

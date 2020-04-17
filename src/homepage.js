@@ -90,9 +90,8 @@ class HomePage extends React.Component {
       })
       .then(() => {
         localStorage.clear();
-        this.props.push({
-          pathname: "/OnliEdu/",
-        });
+        console.log("logout");
+        window.location.href = "/OnliEdu";
       })
       .catch((err) => {
         console.log(err);

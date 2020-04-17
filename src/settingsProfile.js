@@ -70,10 +70,7 @@ class SetingsOfProfile extends React.Component {
 
   onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      this.setState({ defImage: event.target.files[0] }, () => {
-        console.log(this.state.defImage);
-      });
-      console.log(event.target.files[0]);
+      this.setState({ defImage: event.target.files[0] });
       let reader = new FileReader();
       reader.onload = (e) => {
         this.setState({ selectedImage: e.target.result });
@@ -91,15 +88,10 @@ class SetingsOfProfile extends React.Component {
   };
 
   onChangeHandler = (event) => {
-    this.setState(
-      {
-        selectedFile: event.target.files[0],
-        loaded: 0,
-      },
-      () => {
-        console.log(this.state.selectedFile);
-      }
-    );
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    });
   };
 
   async save(props) {
