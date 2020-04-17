@@ -41,24 +41,9 @@ class SetingsOfProfile extends React.Component {
   }
 
   loadImage() {
-    axios
-      .get("http://localhost:5000/displayPhoto/id", {
-        params: {
-          id: this.state.token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.length > 0) {
-          let reader = new FileReader();
-          reader.onload = (e) => {
-            this.setState({ selectedImage: e.target.result }, () => {
-              console.log(this.state.selectedImage);
-            });
-          };
-          // reader.readAsDataURL(res.data);
-        }
-      });
+    var id = String(this.state.token);
+    var path = "http://localhost:5000/photos/" + id;
+    this.setState({ selectedImage: path });
   }
 
   handleChange = (event) => {
@@ -94,6 +79,14 @@ class SetingsOfProfile extends React.Component {
         this.setState({ selectedImage: e.target.result });
       };
       reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
+  onError = () => {
+    if (!this.state.errored) {
+      this.setState({
+        selectedImage: imag,
+      });
     }
   };
 
@@ -177,6 +170,7 @@ class SetingsOfProfile extends React.Component {
                   src={this.state.selectedImage}
                   alt=""
                   className="img-rounded img-style"
+                  onError={this.onError}
                 />
                 <input
                   type="file"

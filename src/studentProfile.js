@@ -5,6 +5,7 @@ import { IoIosSettings } from "react-icons/io";
 import axios from "axios";
 import Reviews from "./homepagecomp/reviews";
 import Footer from "./homepagecomp/footer";
+import imag from "./default-image.png";
 
 class studentProfile extends React.Component {
   constructor(props) {
@@ -17,9 +18,10 @@ class studentProfile extends React.Component {
       aboutSelf: "",
       professor: false,
       files: [],
+      selectedImage: imag,
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     const user = JSON.parse(localStorage.getItem("profileUser"));
     this.setState({
       token: user._id,
@@ -30,6 +32,26 @@ class studentProfile extends React.Component {
       professor: user.professor,
     });
   }
+
+  componentDidMount() {
+    this.loadImage();
+  }
+
+  loadImage() {
+    var id = String(this.state.token);
+    var path = "http://localhost:5000/photos/" + id;
+
+    this.setState({ selectedImage: path });
+  }
+
+  onError = () => {
+    if (!this.state.errored) {
+      this.setState({
+        selectedImage: imag,
+      });
+    }
+  };
+
   handleSettings = (porps) => {
     this.props.history.push({
       pathname: "/OnliEdu/settings",
@@ -126,9 +148,10 @@ class studentProfile extends React.Component {
           <div className="row">
             <div className="col-md-6 img ">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
+                src={this.state.selectedImage}
                 alt=""
                 className="img-rounded img-style"
+                onError={this.onError}
               />
             </div>
             <div className="col-md-6 details">

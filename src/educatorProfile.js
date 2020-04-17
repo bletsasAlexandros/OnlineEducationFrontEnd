@@ -6,6 +6,7 @@ import StarRatingComponent from "react-star-rating-component";
 import Reviews from "./homepagecomp/reviews";
 import Notes from "./homepagecomp/notes";
 import Footer from "./homepagecomp/footer";
+import imag from "./default-image.png";
 
 class educatorProfile extends React.Component {
   constructor() {
@@ -18,13 +19,18 @@ class educatorProfile extends React.Component {
       email: "",
       aboutSelf: "",
       review: "",
+      selectedImage: imag,
       stars: 1,
       loaded: false,
     };
   }
-  async componentDidMount(props) {
-    await this.start();
+
+  componentWillMount() {
+    this.start();
     this.setState({ loaded: true });
+  }
+  componentDidMount(props) {
+    this.loadImage();
   }
 
   start = (props) => {
@@ -62,6 +68,21 @@ class educatorProfile extends React.Component {
     this.setState({ stars: nextValue });
   };
 
+  loadImage() {
+    var id = String(this.state.token);
+    var path = "http://localhost:5000/photos/" + id;
+
+    this.setState({ selectedImage: path });
+  }
+
+  onError = () => {
+    if (!this.state.errored) {
+      this.setState({
+        selectedImage: imag,
+      });
+    }
+  };
+
   save(props) {
     axios
       .post("http://localhost:5000/users/postreview/review", null, {
@@ -86,9 +107,10 @@ class educatorProfile extends React.Component {
           <div className="row">
             <div className="col-md-6 img">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"
+                src={this.state.selectedImage}
                 alt=""
                 className="img-rounded img-style"
+                onError={this.onError}
               />
             </div>
             <div className="col-md-6 details">
