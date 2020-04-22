@@ -9,6 +9,7 @@ import underConstruction from "./homepagecomp/underConstruction";
 import studentProfile from "./studentProfile";
 import educatorProfile from "./educatorProfile";
 import settings from "./settingsProfile";
+import Video from "./homepagecomp/videocall";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/OnliEdu/studentProfile" component={studentProfile} />
         <Route path="/OnliEdu/educatorProfile" component={educatorProfile} />
         <Route path="/OnliEdu/settings" component={settings} />
+        <Route path="/OnliEdu/video" component={Video} />
       </Switch>
     </Router>
   );

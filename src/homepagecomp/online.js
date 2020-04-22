@@ -67,6 +67,9 @@ class Online extends React.Component {
               chatHandler={(name, id) => {
                 this.props.onClickHandler(name, id);
               }}
+              videoHandler={(name, id) => {
+                this.props.onVideoHandler(name, id);
+              }}
             />
           );
         } else {
@@ -81,6 +84,9 @@ class Online extends React.Component {
               subject={professor[i].subject}
               chatHandler={(name, id) => {
                 this.props.onClickHandler(name, id);
+              }}
+              videoHandler={(name, id) => {
+                this.props.onVideoHandler(name, id);
               }}
             />
           );

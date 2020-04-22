@@ -7,6 +7,7 @@ import Online from "./homepagecomp/online";
 import axios from "axios";
 import Chat from "./homepagecomp/chat";
 import Footer from "./homepagecomp/footer";
+import VideoChat from "./homepagecomp/Call";
 
 import "whatwg-fetch";
 import openSocket from "socket.io-client";
@@ -25,6 +26,8 @@ class HomePage extends React.Component {
       userRoom: null,
       selectedValue: "Nothing",
       name: null,
+      videoPopUp: false,
+      channel: "",
     };
   }
 
@@ -34,6 +37,11 @@ class HomePage extends React.Component {
       console.log(userRoom);
       this.setState({ chat: true, nameForChat: name, userRoom: userRoom });
     });
+    // var video = this.state.name + "video";
+    // socket.on(video, (name) => {
+    //   var userRoom = name + this.state.name;
+    //   this.setState({ videoPopUp: true, channel: userRoom });
+    // });
   }
 
   componentWillMount() {
@@ -52,6 +60,7 @@ class HomePage extends React.Component {
           <Online
             onClickHandler={(name, id) => this.onChatClickMe(name, id)}
             value={this.state.selectedValue}
+            onVideoHandler={(name, id) => this.onVideoClick(name, id)}
           />
         ),
       },
@@ -77,6 +86,7 @@ class HomePage extends React.Component {
         <Online
           onClickHandler={(name, id) => this.onChatClickMe(name, id)}
           value={this.state.selectedValue}
+          onVideoHandler={(name, id) => this.onVideoClick(name, id)}
         />
       ),
       selectedValue: "Nothing",
@@ -90,7 +100,7 @@ class HomePage extends React.Component {
       })
       .then(() => {
         localStorage.clear();
-        console.log("logout");
+        alert("logging out");
         window.location.href = "/OnliEdu";
       })
       .catch((err) => {
@@ -108,6 +118,13 @@ class HomePage extends React.Component {
       }
     );
     socket.emit("connected", { nam, name });
+  };
+
+  onVideoClick = (name, id) => {
+    var nam = this.state.name;
+    var userRoom = nam + name;
+    socket.emit("videoConnection", { nam, name });
+    this.setState({ videoPopUp: true, channel: userRoom });
   };
 
   onChildClick = () => {

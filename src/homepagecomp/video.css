@@ -1,0 +1,37 @@
+html {
+  min-height: 100%; /* make sure it is at least as tall as the viewport */
+  position: relative;
+}
+body {
+  height: 100%;
+}
+
+.videoPopUp {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to right top,
+    #1c1810,
+    #3a3326,
+    #5c513c,
+    #7f7155,
+    #a5936e,
+    #b3a079,
+    #c2ad84,
+    #d1bb8f,
+    #cab68d,
+    #c3b18b,
+    #bcac8a,
+    #b5a788
+  );
+}
+
+.cont {
+  margin: 5%;
+  margin-top: 2%;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+}

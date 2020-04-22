@@ -73,13 +73,13 @@ class PersonOnline extends React.Component {
               >
                 Live Chat
               </li>
-              <li>
-                <Link
-                  to="/OnliEdu/underConstruction"
-                  className="theInfoDisplay"
-                >
-                  Video Call
-                </Link>
+              <li
+                className="buttonfile1 theInfoDisplay"
+                onClick={() =>
+                  this.props.videoHandler(this.state.name, this.state.id)
+                }
+              >
+                Video Call
               </li>
               <li>
                 <Link
