@@ -17,16 +17,22 @@ export default class Call extends Component {
   state = {
     remoteStreams: [],
     channel: this.props.channel,
+    close: false,
   };
 
   componentDidMount() {
     this.initLocalStream();
     this.initClient();
+    this.setState({ channel: this.props.channel }, () => {
+      console.log(this.state.channel);
+      this.joinChannel();
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.channel !== this.props.channel && this.props.channel !== "") {
-      this.joinChannel();
+    if (this.props.close) {
+      console.log("Stoping Video");
+      this.localStream.close("agora_local");
     }
   }
 
@@ -134,6 +140,7 @@ export default class Call extends Component {
   };
 
   onPeerLeave = (evt) => {
+    console.log("remove");
     let me = this;
     let stream = evt.stream;
     if (stream) {
@@ -152,24 +159,44 @@ export default class Call extends Component {
   render() {
     return (
       <div className="videoPopUp">
-        <div>
+        <div className="row">
           <div
             id="agora_local"
             style={{ width: "200px", height: "200px" }}
-            className="cont"
+            className="cont column left"
           />
-          {Object.keys(this.state.remoteStreams).map((key) => {
-            let stream = this.state.remoteStreams[key];
-            let streamId = stream.getId();
-            return (
-              <div
-                key={streamId}
-                id={`agora_remote ${streamId}`}
-                style={{ width: "400px", height: "400px" }}
-                className="cont"
-              />
-            );
-          })}
+          <div className="column right">
+            {Object.keys(this.state.remoteStreams).map((key) => {
+              let stream = this.state.remoteStreams[key];
+              let streamId = stream.getId();
+              return (
+                <div
+                  key={streamId}
+                  id={`agora_remote ${streamId}`}
+                  style={{
+                    width: "500px",
+                    height: "500px",
+                    backgroundColor: "red",
+                    textAlign: "center",
+                    float: "right",
+                    right: "15%",
+                  }}
+                  className="cont"
+                />
+              );
+            })}
+            {/* <div
+              style={{
+                width: "500px",
+                height: "500px",
+                backgroundColor: "red",
+                textAlign: "center",
+                float: "right",
+                right: "15%",
+              }}
+              className="cont"
+            ></div> */}
+          </div>
         </div>
       </div>
     );

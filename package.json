@@ -20,6 +20,7 @@
     "react-scripts": "3.4.0",
     "react-star-rating": "^1.4.2",
     "react-star-rating-component": "^1.4.1",
+    "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.4.1"
   },
   "scripts": {

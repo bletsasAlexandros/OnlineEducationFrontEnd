@@ -31,7 +31,26 @@ body {
 }
 
 .cont {
+  position: relative;
   margin: 5%;
   margin-top: 2%;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+}
+
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+
+video {
+  position: relative !important ;
 }

@@ -8,9 +8,11 @@ import axios from "axios";
 import Chat from "./homepagecomp/chat";
 import Footer from "./homepagecomp/footer";
 import VideoChat from "./homepagecomp/Call";
+import Ring from "./ringVideo";
 
 import "whatwg-fetch";
 import openSocket from "socket.io-client";
+import { IoIosClose } from "react-icons/io";
 const socket = openSocket("http://localhost:5000");
 
 class HomePage extends React.Component {
@@ -28,6 +30,7 @@ class HomePage extends React.Component {
       name: null,
       videoPopUp: false,
       channel: "",
+      ringCall: false,
     };
   }
 
@@ -37,11 +40,12 @@ class HomePage extends React.Component {
       console.log(userRoom);
       this.setState({ chat: true, nameForChat: name, userRoom: userRoom });
     });
-    // var video = this.state.name + "video";
-    // socket.on(video, (name) => {
-    //   var userRoom = name + this.state.name;
-    //   this.setState({ videoPopUp: true, channel: userRoom });
-    // });
+    var video = this.state.name + "video";
+    socket.on(video, (name) => {
+      var userRoom = name + this.state.name;
+      this.setState({ ringCall: true, channel: userRoom });
+      console.log("Listening to user: " + name);
+    });
   }
 
   componentWillMount() {
@@ -173,6 +177,36 @@ class HomePage extends React.Component {
             id={this.state.idForChat}
             userRoom={this.state.userRoom}
             nameOfUser={this.state.name}
+          />
+        )}
+        {this.state.videoPopUp ? (
+          <div className="popup">
+            <div
+              className="popup_inner"
+              style={{ top: "15%", bottom: "15%", right: "15%", left: "15%" }}
+            >
+              <VideoChat channel={this.state.channel} />
+              <button
+                onClick={() => {
+                  this.setState({ videoPopUp: false }, () => {
+                    window.location.href = "/OnliEdu/homepage";
+                  });
+                }}
+                className="hangUp"
+              >
+                <IoIosClose size={35} />
+              </button>{" "}
+            </div>{" "}
+          </div>
+        ) : null}
+        {this.state.ringCall && (
+          <Ring
+            acceptCall={() => {
+              this.setState({ ringCall: false, videoPopUp: true });
+            }}
+            declineCall={() => {
+              this.setState({ ringCall: false });
+            }}
           />
         )}
         <Footer />
